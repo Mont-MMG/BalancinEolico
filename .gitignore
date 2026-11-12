@@ -1,0 +1,9 @@
+# PlatformIO / VS Code
+.pio/
+.vscode/
+# Python
+__pycache__/
+*.pyc
+# MATLAB
+*.asv
+*.mat~
