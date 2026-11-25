@@ -1,8 +1,4 @@
-/*
- * control.cpp
- * Implementacion del PID:
- *   u = Kp*e + Ki*integral(e) - Kd*thetaDot
- */
+
 #include "control.h"
 #include <Arduino.h>
 
@@ -21,9 +17,8 @@ void pidSetGains(PID &pid, float kp, float ki, float kd) {
 float pidUpdate(PID &pid, float ref, float theta, float thetaDot, float ts) {
   float e  = ref - theta;
   float uP = pid.kp * e;
-  float uD = -pid.kd * thetaDot;        // derivada sobre la medicion (sin "patada")
+  float uD = -pid.kd * thetaDot;      
 
-  // Anti-windup: solo integra si no satura, o si integrar ayuda a salir de saturacion
   float uTry = uP + pid.ki * (pid.integ + e * ts) + uD;
   if (fabsf(uTry) < pid.uMax || (uTry * e) < 0.0f) {
     pid.integ += e * ts;
